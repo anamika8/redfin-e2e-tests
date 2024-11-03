@@ -1,0 +1,17 @@
+{
+  "name": "redfin-e2e-tests",
+  "version": "1.0.0",
+  "description": "A BDD (Behavior-Driven Development) test automation framework with JavaScript, Selenium, and Page Object Model (POM)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^5.1.2",
+    "cucumber": "^6.0.7",
+    "selenium-webdriver": "^4.26.0"
+  }
+}
