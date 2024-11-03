@@ -1,11 +1,18 @@
-const { By } = require('selenium-webdriver');
+const { By, until } = require('selenium-webdriver');
 const driver = require('../setup').driver;
 
 class HomePage {
 
-  constructor() {
-    this.searchField = driver.findElement(By.css('[class="search-input-box"]'));
-    this.searchButton = driver.findElement(By.css('[class="SearchButton"]'));
+  constructor() {}
+
+  get searchField() {
+    // give the element 5 seconds to load
+    return driver.wait(until.elementLocated(By.css('[class="search-input-box"]')), 5000);
+  }
+
+  get searchForm() {
+    // give the form 10 seconds to load
+    return driver.wait(until.elementLocated(By.css('[class="SearchBoxForm"]')), 10000);
   }
 
   async navigateToHomePage(url) {
@@ -13,11 +20,12 @@ class HomePage {
   }
 
   async enterCity(cityName) {
-    await this.searchField.sendKeys(username);
+    const element = await driver.wait(until.elementIsEnabled(this.searchField), 10000);
+    await element.sendKeys(cityName);
   }
 
   async submit() {
-    await this.searchButton.click();
+    await this.searchForm.submit();
   }
 }
 

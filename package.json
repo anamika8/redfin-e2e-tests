@@ -4,7 +4,7 @@
   "description": "A BDD (Behavior-Driven Development) test automation framework with JavaScript, Selenium, and Page Object Model (POM)",
   "main": "index.js",
   "scripts": {
-    "test": "cucumber-js --require features/**/*.feature --require steps/**/*.js --format-options '{\"snippetInterface\": \"async-await\"}'"
+    "test": "cucumber-js features/**/*.feature --require steps/**/*.js"
   },
   "keywords": [],
   "author": "",

@@ -2,7 +2,6 @@ const { Given, When, Then } = require('cucumber');
 const HomePage = require('../poms/home_page');
 const SearchResultsPage = require('../poms/search_results_page');
 
-
 const homePage = new HomePage();
 const searchResultsPage = new SearchResultsPage();
 
@@ -20,16 +19,22 @@ When('User types {string} in the search field', async function (cityName) {
     await homePage.enterCity(cityName);
 });
 
-When('User clicks on the Search button', async function () {
+When('User submits the search', async function () {
     await homePage.submit();
 });
 
-Then('Search result page opens with URL containing {string}', async function (expectedSearchText) {
-    const currentUrl = await searchResultsPage.getCurrentUrl();
-    getExpect(currentUrl).to.contain(expectedSearchText);
+When('User selects the first option from the dropdown', async function () {
+    await homePage.selectNthSearchOption(1);
 });
 
-Then('Search result text contains {string}', async function (expectedResultText) {
+Then('Search result page opens with URL containing {string}', { timeout: 20000 }, async function (expectedSearchText) {
+    const currentUrl = await searchResultsPage.getCurrentUrl();
+    const expect = await getExpect();
+    expect(currentUrl).to.contain(expectedSearchText);
+});
+
+Then('Search result text contains {string}', { timeout: 20000 }, async function (expectedResultText) {
   const resultText = await searchResultsPage.getSearchResultText();
-  getExpect(resultText).to.eq(expectedResultText);
+  const expect = await getExpect();
+  expect(resultText).to.eq(expectedResultText);
 });

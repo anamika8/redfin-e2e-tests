@@ -1,18 +1,22 @@
-const { By } = require('selenium-webdriver');
+const { By, until } = require('selenium-webdriver');
 const driver = require('../setup').driver;
 
 class SearchResultsPage {
 
-  constructor() {
-    this.searchHeaderTitle = driver.findElement(By.css('[data-rf-test-id="h1-header"]'));
+  constructor() {}
+
+  get searchHeaderTitle() {
+    return driver.wait(until.elementLocated(By.className('bp-DesktopSearchHeader__title')), 10000);
   }
 
   async getSearchResultText() {
-    await this.searchHeaderTitle.getText();
+    const element = await this.searchHeaderTitle;
+    await driver.wait(until.elementIsVisible(element), 20000);
+    return element.getText();
   }
 
   async getCurrentUrl() {
-    return await driver.getCurrentUrl();
+    return driver.getCurrentUrl();
   }
 }
 
