@@ -15,17 +15,10 @@ class SearchResultsPage {
     return element.getText();
   }
 
-  async getCurrentUrl(previousUrl) {
-    await this.waitForUrlChange(previousUrl);
-    return await driver.getCurrentUrl();
+  async getCurrentUrl() {
+    return await driver.executeScript('return window.location.href');
   }
 
-  async waitForUrlChange(previousUrl, timeout = 10000) {
-    await driver.wait(async () => {
-        const currentUrl = await driver.getCurrentUrl();
-        return currentUrl !== previousUrl;
-    }, timeout);
-  }
 }
 
 module.exports = SearchResultsPage;
