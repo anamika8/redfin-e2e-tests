@@ -15,8 +15,16 @@ class SearchResultsPage {
     return element.getText();
   }
 
-  async getCurrentUrl() {
-    return driver.getCurrentUrl();
+  async getCurrentUrl(previousUrl) {
+    await this.waitForUrlChange(previousUrl);
+    return await driver.getCurrentUrl();
+  }
+
+  async waitForUrlChange(previousUrl, timeout = 10000) {
+    await driver.wait(async () => {
+        const currentUrl = await driver.getCurrentUrl();
+        return currentUrl !== previousUrl;
+    }, timeout);
   }
 }
 
