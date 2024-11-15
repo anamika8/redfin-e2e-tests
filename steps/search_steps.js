@@ -56,9 +56,7 @@ When('User waits {int} seconds for the results to appear', async function (secs)
 
 Then('Search result page opens with URL containing {string}', async function (expectedSearchText) {
     console.log(`Verifying the result page URL contains - ${expectedSearchText}`);
-    const newURL = await retry(async () => {
-        return await searchResultsPage.getCurrentUrl(currentUrl, MAX_TIMEOUT_PER_STEP);
-    });
+    const newURL = await searchResultsPage.getCurrentUrl();
     expect(newURL).to.contain(expectedSearchText);
 });
 
