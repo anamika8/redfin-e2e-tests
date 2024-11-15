@@ -83,11 +83,22 @@ When('User clicks on the `Bed-bath` filter', async function () {
     await searchResultsPage.openBedBathFilter();
 });
 
+When('User clicks on the `Home type` filter', async function(){
+    console.log(`User clicks on the 'Home type' filter`);
+    await searchResultsPage.openhomeTypeFilter();
+});
+
 When('User selects {string} under the `For Sale` filter', async function (filterName) {
     console.log(`User selecting ${filterName} as a filter`);
     await searchResultsPage.selectCheckbox(filterName);
     await searchResultsPage.clickDoneButton();
 });
+
+When('User selects {string} from the `Home type` filter', async function (homeTypeName) {
+    console.log(`User selecting ${homeTypeName} as a filter`);
+    await searchResultsPage.selectHomeType(homeTypeName);
+    await searchResultsPage.clickDoneButton();  
+})
 
 When('User enters {string} and {string} as min and max price range', async function (min, max) {
     console.log(`User selecting $${min} & $${max} as price ranges`);
@@ -122,4 +133,11 @@ Then('Bath count of first home in the search result is atleast {int}', async fun
     const baths = await searchResultsPage.getNthHomeBathCount(1);
     console.log(`First home bath count - ${baths}`);
     expect(baths).to.be.gte(minCount);
+});
+
+Then('Home type filter in the search result is {string}', async function(homeTypeName) {
+    console.log(`Verifying the Home type filter is ${homeTypeName} in the result`);
+    const homes = await searchResultsPage.homeTypeSelected; 
+    console.log(`Home type is - ${homes}`);    
+    expect(homes.toLowerCase()).to.equal(homeTypeName.toLowerCase()); 
 });

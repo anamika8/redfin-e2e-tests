@@ -36,6 +36,11 @@ class SearchResultsPage {
     return driver.wait(until.elementLocated(By.xpath(filterXPath)), 10000);
   }
 
+  get homeTypeFilter() {
+    const filterXpath = `//p[contains(@class, 'RichSelect__value') and text()='Home type']`;
+    return driver.wait(until.elementLocated(By.xpath(filterXpath), 1000))
+  }
+
   get minPriceField() {
     return driver.wait(until.elementLocated(By.css('input[placeholder="Enter min"]'), 10000));
   }
@@ -55,6 +60,15 @@ class SearchResultsPage {
   get bathCounts() {
     return driver.wait(until.elementsLocated(By.css('.bp-Homecard__Stats--baths'), 10000));
   }
+
+  get homeType(){    
+    return driver.wait(until.elementsLocated(By.css('.PropertyTypes__items'), 10000));
+  }
+
+  get homeTypeSelected() {
+    return driver.wait(until.elementLocated(By.css('.ExposedPropertyTypeFilterContainer .ExposedPropertyTypeFilter .RichSelect__value.text-ellipsis')))
+        .then(element => element.getText());  
+}
 
   async getSearchResultText() {
     const element = await this.searchHeaderTitle;
@@ -78,6 +92,11 @@ class SearchResultsPage {
 
   async openBedBathFilter() {
     const element = await this.bedBathFilter;
+    await element.click();
+  }
+
+  async openhomeTypeFilter() {
+    const element = await this.homeTypeFilter;
     await element.click();
   }
 
@@ -155,6 +174,23 @@ class SearchResultsPage {
     console.log("No elements found with the specified class.");
     return -1;
   }
+
+  async selectHomeType(homeTypeName) {
+    const propertyTypeOptions = await this.homeType;  
+    if (propertyTypeOptions.length > 0) {
+        for (let option of propertyTypeOptions) {
+            const label = await option.findElement(By.css('.Label--text'));
+            const labelText = await label.getText();
+            if (labelText.toLowerCase() === homeTypeName.toLowerCase()) { 
+                option.click();
+                return;
+            }
+        }
+        console.log("No property type options found.");
+        return;  
+    } 
+}
+
 
 }
 
