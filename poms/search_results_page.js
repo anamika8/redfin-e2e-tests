@@ -187,7 +187,7 @@ class SearchResultsPage {
             }
         }
         console.log("No property type options found.");
-        return;  
+        return -1;  
     } 
 }
 

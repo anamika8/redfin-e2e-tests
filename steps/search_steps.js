@@ -5,7 +5,7 @@ const driver = require('../setup').driver;
 
 const homePage = new HomePage();
 const searchResultsPage = new SearchResultsPage();
-// 60 seconds timeout per step
+// 90 seconds timeout per step
 const MAX_TIMEOUT_PER_STEP = 90 * 1000;
 let expect;
 let currentUrl = '';
